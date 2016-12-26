@@ -1,37 +1,78 @@
-## Welcome to GitHub Pages
+---
+title: Wazuh Demo
+---
 
-You can use the [editor on GitHub](https://github.com/vikman90/vikman90.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+# Welcome to the Wazuh Project
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Hello World!
 
-### Markdown
+# Table of contents
+{: .no_toc }
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+* TOC
+{:toc}
 
-```markdown
-Syntax highlighted code block
+# How to install Wazuh Manager
 
-# Header 1
-## Header 2
-### Header 3
+You can install from packages (recommended) or from sources.
 
-- Bulleted
-- List
+## Install from RPM packages
 
-1. Numbered
-2. List
+First we’ll install the Wazuh repository. Run the following command depending on your operating system:
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```sh
+cat > /etc/yum.repos.d/wazuh.repo << \EOF
+[wazuh_repo]
+gpgcheck=1
+gpgkey=https://packages.wazuh.com/key/RPM-GPG-KEY-WAZUH
+enabled=1
+name=RHEL-$releasever - Wazuh
+baseurl=https://packages.wazuh.com/yum/el/$releasever/$basearch
+protect=1
+EOF
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Now install the Wazuh packages:
 
-### Jekyll Themes
+```sh
+yum install wazuh-manager wazuh-api
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/vikman90/vikman90.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Install from sources
 
-### Support or Contact
+Follow these steps:
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+```sh
+git clone https://github.com/wazuh/wazuh.git
+cd wazuh
+make -C src TARGET=manager DEBUG=yes
+./install.sh
+```
+
+### Options for the make command
+
+TARGET
+: This option is the target compilation profile. It may be `manager`, `agent` or `local`.
+
+DEBUG
+: Inserts debugging symbols into the binary code. It's useful for `gdb` or `valgrind`.
+
+### OSSEC profiles
+
+**Component** | **Manager** | **Agent** | **Local**
+*syscheckd* |Yes|Yes|Yes
+*logcollector* |Yes|Yes|Yes
+*modulesd* |Yes|Yes|Yes
+*analysisd* |Yes||Yes
+*remoted* |Yes||
+*agentd* ||Yes|
+*execd* |Yes|Yes|Yes
+*monitord* |Yes||
+
+# Next steps
+
+* Configure Wazuh.
+* Add agents.
+* Set `syscheck.sleep` to 0.
+* Enable *Wazuh TRT Technology* (coming soon).
+* Start Wazuh.
