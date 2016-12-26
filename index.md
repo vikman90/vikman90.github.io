@@ -6,11 +6,19 @@ title: Wazuh Demo
 
 Hello World!
 
+**Information:** \\
+This is not the valid Wazuh documentation. Get the [Official Wazuh documentation](http://documentation.wazuh.com/en/latest).
+{: .note .info}
+
+---
+
 # Table of contents
 {: .no_toc }
 
 * TOC
 {:toc}
+
+---
 
 # How to install Wazuh Manager
 
@@ -21,7 +29,7 @@ You can install from packages (recommended) or from sources.
 First we’ll install the Wazuh repository. Run the following command depending on your operating system:
 
 ```sh
-cat > /etc/yum.repos.d/wazuh.repo << \EOF
+cat > /etc/yum.repos.d/wazuh.repo <<\EOF
 [wazuh_repo]
 gpgcheck=1
 gpgkey=https://packages.wazuh.com/key/RPM-GPG-KEY-WAZUH
@@ -59,20 +67,28 @@ DEBUG
 
 ### OSSEC profiles
 
-**Component** | **Manager** | **Agent** | **Local**
-*syscheckd* |Yes|Yes|Yes
-*logcollector* |Yes|Yes|Yes
-*modulesd* |Yes|Yes|Yes
-*analysisd* |Yes||Yes
-*remoted* |Yes||
-*agentd* ||Yes|
-*execd* |Yes|Yes|Yes
-*monitord* |Yes||
+Component|Manager|Agent|Local
+---------|-------|-----|-----
+Syscheck / Rootcheck|Yes|Yes|Yes
+Log collector|Yes|Yes|Yes
+Active Response executor|Yes|Yes|Yes
+Analysis engine|Yes||Yes
+Remote receiver|Yes||
+Agent client||Yes|
+OpenSCAP module|Yes|Yes|Yes
+Database sync module|Yes||Yes
+Alert and agent monitor|Yes||Yes
+Mail alert sender|Yes||Yes
+Syslog client|Yes||Yes
 
 # Next steps
 
 * Configure Wazuh.
 * Add agents.
-* Set `syscheck.sleep` to 0.
+* Speed up Syscheck by setting `syscheck.sleep` to 0.
 * Enable *Wazuh TRT Technology* (coming soon).
 * Start Wazuh.
+
+**Warning:** \\
+This page will self destruct in a short time.
+{: .note .warning}
